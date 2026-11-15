@@ -48,7 +48,9 @@ adb install "부릉부릉_N딩크레딧_시연_release.apk"
 4. 한 번에 결과를 확인하려면 시연 메뉴의 **시연 종료**를 누릅니다. 남은 구간과 미확인 방문을 시나리오로 채운 뒤 영상 선택 화면으로 이동합니다. **영상 없이 만들기**로 크레딧을 재생할 수 있습니다.
 5. 결과 화면에서 **이동비 확인하기**를 누릅니다. 시연 이동비는 주행 거리, 기준 전비 5.0 km/kWh, 300원/kWh, 시연 통행료 8,600원, 주차비 0원으로 계산합니다. 나누는 인원 변경은 이동비 QR에도 반영됩니다.
 
-새 시연 여행은 2026년 11월 14~15일 서울 → 속초 → 강릉 → 서울의 9개 이동 구간과 8개 방문 장소로 구성됩니다. 일정의 이동거리는 504.4 km, 주행 시간은 7시간 16분입니다. 18시~06시 기준 밤길은 120.6 km, 1시간 44분입니다. 시연 메뉴에서 일시정지, 정차로 건너뛰기, 장면 선택, 다시 시작을 사용할 수 있습니다. [시나리오](demo/app/src/main/java/com/example/pleos_endingcredit/DemoScenario.kt) · [재생 상태](demo/app/src/main/java/com/example/pleos_endingcredit/DemoPlayback.kt) · [조작 메뉴](demo/app/src/main/java/com/example/pleos_endingcredit/DemoControlsView.kt) · [시연 이동비 계산](demo/app/src/main/java/com/example/pleos_endingcredit/D1_1CostsView.kt)
+새 시연 여행은 2026년 11월 14일부터 15일까지 진행됩니다. 서울 → 속초 → 강릉 → 서울 경로에 9개 이동 구간과 8개 방문 장소가 있습니다. 총 504.4 km를 7시간 16분 동안 주행하며, 18시부터 다음 날 06시까지를 기준으로 집계한 밤길 주행은 120.6 km, 1시간 44분입니다.
+
+시연 메뉴에서 일시정지, 정차로 건너뛰기, 장면 선택, 다시 시작을 사용할 수 있습니다. [시나리오](demo/app/src/main/java/com/example/pleos_endingcredit/DemoScenario.kt) · [재생 상태](demo/app/src/main/java/com/example/pleos_endingcredit/DemoPlayback.kt) · [조작 메뉴](demo/app/src/main/java/com/example/pleos_endingcredit/DemoControlsView.kt) · [시연 이동비 계산](demo/app/src/main/java/com/example/pleos_endingcredit/D1_1CostsView.kt)
 
 ## 소스 빌드
 
