@@ -1,0 +1,14 @@
+# Append these entries to the project's ignored local.properties, then rebuild.
+# The first value must be the JavaScript platform key for your Kakao app.
+# Register the exact same HTTPS origin in that key's JavaScript SDK domains.
+# Official setup: https://apis.map.kakao.com/web/guide/
+# Enable KakaoMap first: App > KakaoMap > Usage settings > ON.
+# https://developers.kakao.com/docs/ko/kakaomap/common
+KAKAO_MAP_JS_KEY=
+KAKAO_MAP_ORIGIN=https://localhost
+
+# With a key configured, the map loads automatically when its screen opens.
+# Before a GPS fix arrives, the map displays Seoul (37.5665, 126.9780) only;
+# that display default is never inserted into the recorded trip.
+# The key is a client SDK credential included in the APK; limit its use by
+# platform/domain and monitor its quota in Kakao Developers.

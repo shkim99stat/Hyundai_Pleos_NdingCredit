@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>크레딧 영상 올리기</title>
+<style>
+  * { box-sizing: border-box }
+  body { margin: 0; font: 14px/1.5 "Noto Sans KR", system-ui, sans-serif; color: #111 }
+  main { max-width: 384px; min-height: 100dvh; margin: auto; padding: 24px 22px 32px; display: flex; flex-direction: column }
+  header { font-size: 13px; color: #777e89 }
+  h1 { margin: 20px 0 10px; font-size: 26px; line-height: 1.35 }
+  p { margin: 0; color: #5b6170 }
+  figure { display: grid; place-items: center; overflow: hidden; aspect-ratio: 340 / 226; margin: 24px 0 12px; border-radius: 14px; background: linear-gradient(146deg, #7ec3ee, #2c5d8f 71%); color: white }
+  video { width: 100%; height: 100%; object-fit: contain; grid-area: 1 / 1 }
+  label { cursor: pointer; font-weight: 700 }
+  figure label { padding: 12px; grid-area: 1 / 1 }
+  .file { display: flex; justify-content: space-between; gap: 12px; align-items: start }
+  #name { overflow-wrap: anywhere }
+  #status { min-height: 24px; margin-top: 16px }
+  footer { margin-top: auto; padding-top: 24px; text-align: center }
+  button { width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: #333; color: white; font: inherit; font-weight: 700 }
+  button:disabled { opacity: .55 }
+  footer p { margin-top: 14px; font-size: 12px; color: #777e89 }
+  [hidden] { display: none }
+</style>
+<main>
+  <header>N딩 크레딧</header>
+  <h1>크레딧에 넣을<br>영상을 골라 주세요</h1>
+  <p>한 개만 · 5초~30초<br>크레딧을 상영하는 동안 소리 없이 재생돼요.</p>
+  <input id="file" type="file" accept="video/*" hidden>
+  <figure>
+    <video id="preview" controls playsinline muted hidden></video>
+    <label id="first" for="file">영상 고르기</label>
+  </figure>
+  <div id="selected" class="file" hidden>
+    <span id="name"></span>
+    <label for="file">다른 영상 고르기</label>
+  </div>
+  <p id="status" role="status"></p>
+  <footer>
+    <button id="send" type="button" disabled>올리기</button>
+    <p>다른 사람이 올리면 마지막에 올린 영상으로 바뀌어요</p>
+  </footer>
+</main>
+<script>
+  const input = document.querySelector('#file');
+  const preview = document.querySelector('#preview');
+  const status = document.querySelector('#status');
+  const send = document.querySelector('#send');
+  const selected = document.querySelector('#selected');
+  const first = document.querySelector('#first');
+  const name = document.querySelector('#name');
+  let objectUrl;
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    send.disabled = true;
+    status.textContent = '';
+    selected.hidden = true;
+    first.hidden = false;
+    preview.hidden = true;
+    preview.removeAttribute('src');
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    if (!file) return;
+    if (file.size > 256 * 1024 * 1024) {
+      status.textContent = '256MB 이하의 영상을 골라 주세요.';
+      return;
+    }
+    objectUrl = URL.createObjectURL(file);
+    preview.src = objectUrl;
+    preview.onloadedmetadata = () => {
+      if (preview.duration < 5 || preview.duration > 30) {
+        status.textContent = '5초~30초 길이의 영상을 골라 주세요.';
+        return;
+      }
+      const seconds = Math.floor(preview.duration);
+      name.textContent = file.name + ' · 0:' + String(seconds).padStart(2, '0');
+      selected.hidden = false;
+      first.hidden = true;
+      preview.hidden = false;
+      send.disabled = false;
+    };
+    preview.onerror = () => { status.textContent = '이 영상을 열 수 없어요. 다른 영상을 골라 주세요.'; };
+  });
+  send.addEventListener('click', async () => {
+    send.disabled = input.disabled = true;
+    status.textContent = '영상을 올리고 있어요…';
+    try {
+      const response = await fetch(location.pathname, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/octet-stream' },
+        body: input.files[0]
+      });
+      if (response.status === 422) {
+        status.textContent = '지원되는 형식의 5초~30초 영상을 골라 주세요.';
+      } else if (!response.ok) {
+        status.textContent = '전송하지 못했어요. 차량 화면의 QR을 다시 확인해 주세요.';
+      } else {
+        status.textContent = '영상을 보냈어요. 차량 화면에서 크레딧을 만들어 주세요.';
+        return;
+      }
+    } catch {
+      status.textContent = '연결이 끊겼어요. 차량과 같은 네트워크에서 다시 시도해 주세요.';
+    } finally {
+      input.disabled = false;
+    }
+    send.disabled = false;
+  });
+</script>
+</html>

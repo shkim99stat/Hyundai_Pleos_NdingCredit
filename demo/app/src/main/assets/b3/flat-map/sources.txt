@@ -1,0 +1,9 @@
+B3 flat basemap and road data: © OpenStreetMap contributors.
+https://www.openstreetmap.org/copyright
+
+Vector tiles: OpenFreeMap, OpenMapTiles.
+https://openfreemap.org/
+https://openmaptiles.org/
+
+The bundled Sokcho–Gangneung sample route was calculated by OSRM from OpenStreetMap road data.
+https://project-osrm.org/

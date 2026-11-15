@@ -1,0 +1,307 @@
+{
+  "source": "hyundai-design-properties.json",
+  "rootNode": "78:72877",
+  "width": 1700,
+  "height": 1184,
+  "nodes": [
+    {
+      "id": "78:72877",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1184,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72878",
+      "x": 2,
+      "y": 2,
+      "width": 1696,
+      "height": 1180,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72879",
+      "x": 58,
+      "y": 887,
+      "width": 1584,
+      "height": 247,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72880",
+      "x": 1113.030029296875,
+      "y": 914,
+      "width": 528.969970703125,
+      "height": 220,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72881",
+      "x": 1422.0000305175781,
+      "y": 914,
+      "width": 220,
+      "height": 220,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72882",
+      "x": 1515.0800323486328,
+      "y": 1005.5899963378906,
+      "width": 34.34000015258789,
+      "height": 35,
+      "text": "QR",
+      "fontSize": 24,
+      "lineHeight": 35,
+      "baseline": 27.100000381469727
+    },
+    {
+      "id": "78:72883",
+      "x": 1113.030029296875,
+      "y": 1005.1600036621094,
+      "width": 284.9700012207031,
+      "height": 37.689998626708984,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72884",
+      "x": 1113.030029296875,
+      "y": 1005.1600036621094,
+      "width": 285.4700012207031,
+      "height": 37,
+      "text": "카드는 폰으로 받아 가세요",
+      "fontSize": 26,
+      "lineHeight": 37,
+      "baseline": 28.899999618530273
+    },
+    {
+      "id": "78:72885",
+      "x": 58,
+      "y": 988,
+      "width": 223.27999877929688,
+      "height": 72,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72886",
+      "x": 89,
+      "y": 1005.5900001525879,
+      "width": 161.77999877929688,
+      "height": 35,
+      "text": "이동비도 나누기",
+      "fontSize": 24,
+      "lineHeight": 35,
+      "baseline": 27.100000381469727
+    },
+    {
+      "id": "78:72887",
+      "x": 58,
+      "y": 150,
+      "width": 1584,
+      "height": 709,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72888",
+      "x": 59.32421875,
+      "y": 144.953125,
+      "width": 861.7109985351562,
+      "height": 714.046875,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72889",
+      "x": 968.9500122070312,
+      "y": 150,
+      "width": 673.0499877929688,
+      "height": 709,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72890",
+      "x": 969.0007934570312,
+      "y": 284,
+      "width": 673.0499877929688,
+      "height": 37.689998626708984,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72891",
+      "x": 969.0007934570312,
+      "y": 284,
+      "width": 303,
+      "height": 37,
+      "text": "186km · 4시간 · 밤길 40분",
+      "fontSize": 26,
+      "lineHeight": 37,
+      "baseline": 28.899999618530273
+    },
+    {
+      "id": "78:72892",
+      "x": 969.0007934570312,
+      "y": 150,
+      "width": 673.0499877929688,
+      "height": 118,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72893",
+      "x": 969.0007934570312,
+      "y": 216,
+      "width": 673.0499877929688,
+      "height": 52,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72894",
+      "x": 1037.0007934570312,
+      "y": 223.1599998474121,
+      "width": 79.55000305175781,
+      "height": 37,
+      "text": "들른 곳",
+      "fontSize": 26,
+      "lineHeight": 37,
+      "baseline": 28.899999618530273
+    },
+    {
+      "id": "78:72895",
+      "x": 969.0007934570312,
+      "y": 216,
+      "width": 52,
+      "height": 52,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72896",
+      "x": 990.0007934570312,
+      "y": 228.94999980926514,
+      "width": 10.5,
+      "height": 26,
+      "text": "2",
+      "fontSize": 18,
+      "lineHeight": 26,
+      "baseline": 20.200000762939453
+    },
+    {
+      "id": "78:72897",
+      "x": 969.0007934570312,
+      "y": 150,
+      "width": 673.0499877929688,
+      "height": 52,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72898",
+      "x": 1037.0007934570312,
+      "y": 157.1599998474121,
+      "width": 79.55000305175781,
+      "height": 37,
+      "text": "월평동 ",
+      "fontSize": 26,
+      "lineHeight": 37,
+      "baseline": 29.836000442504883
+    },
+    {
+      "id": "78:72899",
+      "x": 969.0007934570312,
+      "y": 150,
+      "width": 52,
+      "height": 52,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72900",
+      "x": 988.0007934570312,
+      "y": 158.5,
+      "width": 14,
+      "height": 35,
+      "text": "1",
+      "fontSize": 24,
+      "lineHeight": 100,
+      "baseline": 27.964000701904297
+    },
+    {
+      "id": "78:72901",
+      "x": 706.12353515625,
+      "y": 350,
+      "width": 56.542938232421875,
+      "height": 75,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72902",
+      "x": 58,
+      "y": 50,
+      "width": 1584,
+      "height": 72,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72903",
+      "x": 1541.8299560546875,
+      "y": 50,
+      "width": 100.16999816894531,
+      "height": 72,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72904",
+      "x": 58,
+      "y": 54.09000015258789,
+      "width": 616,
+      "height": 63.79999923706055,
+      "text": null,
+      "fontSize": null,
+      "lineHeight": null
+    },
+    {
+      "id": "78:72905",
+      "x": 58,
+      "y": 53.09000015258789,
+      "width": 616.5,
+      "height": 64,
+      "text": "우리 가족 제주 여행을 기록했어요",
+      "fontSize": 44,
+      "lineHeight": 64,
+      "baseline": 49.599998474121094
+    }
+  ]
+}

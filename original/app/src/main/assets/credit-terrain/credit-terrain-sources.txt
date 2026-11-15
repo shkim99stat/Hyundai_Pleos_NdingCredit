@@ -1,0 +1,11 @@
+Korean peninsula shaded-relief map, Web Mercator.
+
+Hydrography and coast: © OpenStreetMap contributors, OpenFreeMap, OpenMapTiles.
+https://www.openstreetmap.org/copyright
+https://openfreemap.org/
+https://openmaptiles.org/
+
+Elevation: Mapzen/Tilezen Terrain Tiles, hosted in the AWS Registry of Open Data.
+U.S. Geological Survey (SRTM/GMTED) and NOAA (ETOPO1), as documented in the source attribution.
+https://registry.opendata.aws/terrain-tiles/
+https://github.com/tilezen/joerd/blob/master/docs/attribution.md

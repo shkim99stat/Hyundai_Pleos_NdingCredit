@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<link rel="stylesheet" href="https://appassets.androidplatform.net/endingcredit/maplibre-gl.css">
+<style>
+html,body,#map{margin:0;width:100%;height:100%;overflow:hidden;background:#f2f2f2;font-family:sans-serif}
+.route-stop,.now,.label{pointer-events:none;box-sizing:border-box}
+.route-stop{width:30px;height:30px;z-index:1}
+.route-stop-number{display:grid;place-items:center;box-sizing:border-box;width:100%;height:100%;
+  border:3px solid var(--stop-accent);border-radius:50%;background:#fff;color:#263142;
+  font-size:17px;font-weight:700;line-height:1;box-shadow:0 1px 4px #26314218}
+.route-stop.last .route-stop-number{background:var(--stop-accent);color:#fff}
+.route-stop.pending .route-stop-number{border-style:dashed}
+.route-stop .route-stop-label{position:absolute;top:50%;left:calc(100% + 5px);transform:translateY(-50%);
+  max-width:min(190px,45vw);overflow:hidden;text-overflow:ellipsis;
+  background:#fff;color:#263142;padding:4px 9px;border-radius:999px;
+  font-size:14px;font-weight:700;line-height:1.25;box-shadow:0 2px 6px #26314216}
+.route-stop.label-left .route-stop-label{left:auto;right:calc(100% + 5px)}
+.label{background:rgba(255,255,255,.94);padding:3px 5px;border-radius:3px;font-size:11px;color:#333;white-space:nowrap}
+.now{width:18px;height:18px;border:3px solid white;border-radius:50%;background:#333;box-shadow:0 0 0 3px #8888}
+.recording-position{display:grid;place-items:center;pointer-events:none}
+.recording-position img{display:block;grid-area:1/1;height:auto}
+.demo-route-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.demo-moving-car{position:absolute;top:0;left:0;z-index:1}
+.recording-position-radius{width:calc(100vw * 120 / 828)}
+.recording-position-dot{width:calc(100vw * 36 / 828)}
+.departure-label{pointer-events:none;background:#fff;color:#2b2e36;white-space:nowrap;
+  font-size:calc(100vw * 22 / 828);font-weight:500;line-height:calc(100vw * 26 / 828);
+  padding:calc(100vw * 8 / 828) calc(100vw * 16 / 828);border-radius:999px;
+  box-shadow:0 calc(100vw * 4 / 828) calc(100vw * 12 / 828) #0000001f}
+.recording-car{width:calc(100vw * 45.531 / 1696);height:calc(100vw * 84.911 / 1696);
+  position:relative;overflow:hidden;transform:rotate(var(--car-heading,0deg));transition:transform 120ms linear}
+.recording-position .recording-car img{position:absolute;left:-26.07%;top:-15.2%;width:155.99%;height:134.26%}
+@media(prefers-reduced-motion:reduce){.recording-car{transition:none}}
+.live-recording .departure-label,.live-recording .route-stop .route-stop-label{display:none}
+.live-recording .route-stop{width:clamp(14px,2.12vw,36px);height:clamp(14px,2.12vw,36px);
+  background:url('https://appassets.androidplatform.net/endingcredit/a4-pin-ring.svg') center/contain no-repeat}
+.live-recording .route-stop .route-stop-number{position:absolute;left:50%;bottom:50%;transform:translateX(-50%);
+  width:clamp(22px,3.54vw,60px);height:clamp(27px,4.31vw,73px);padding-bottom:32%;
+  border:0;border-radius:0;box-shadow:none;color:#fff;font-size:clamp(13px,1.6vw,27px);font-weight:500;
+  background:url('https://appassets.androidplatform.net/endingcredit/a4-pin.svg') center/contain no-repeat}
+.live-recording .maplibregl-ctrl-attrib{z-index:3}
+.trip-detail .route-stop{width:clamp(14px,2.12vw,36px);height:clamp(14px,2.12vw,36px);
+  background:url('https://appassets.androidplatform.net/endingcredit/f4-pin-ring.svg') center/contain no-repeat}
+.trip-detail .route-stop .route-stop-number{position:absolute;left:50%;bottom:48%;transform:translateX(-50%);
+  width:clamp(23px,3.54vw,60px);height:clamp(28px,4.25vw,72px);padding-bottom:30%;
+  border:0;border-radius:0;box-shadow:none;color:#fff;font-size:clamp(13px,1.65vw,28px);font-weight:700;
+  background:url('https://appassets.androidplatform.net/endingcredit/f4-pin.svg') center/contain no-repeat}
+.trip-detail .route-stop .route-stop-label,.trip-detail .departure-label{display:none}
+#recenter{position:fixed;right:12px;bottom:36px;z-index:2;border:1px solid #d4d4d4;border-radius:8px;padding:10px 14px;background:white;color:#222;font-size:14px;font-weight:700;box-shadow:0 1px 5px #0002}
+#recording-header-backdrop{position:absolute;left:3.8647%;top:2.2966%;width:73.6715%;height:8.8136%;z-index:2;pointer-events:none;border-radius:16px;border-radius:clamp(10px,2.9vw,24px);background:rgba(255,255,255,.90);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#recording-header-backdrop{background:rgba(255,255,255,.72)}}
+#map .maplibregl-ctrl-bottom-left{right:0;padding:0 6px 2px;box-sizing:border-box}
+#map .maplibregl-ctrl-attrib{margin:0;padding:1px 5px;max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;font-size:10px;line-height:13px;background:rgba(255,255,255,.86);border-radius:4px}
+</style>
+</head>
+<body>
+<div id="map" aria-label="여행 경로 지도"></div>
+<div id="recording-header-backdrop" aria-hidden="true" hidden></div>
+<button id="recenter" type="button" hidden>내 위치</button>
+<script src="https://appassets.androidplatform.net/endingcredit/maplibre-gl.js"></script>
+<script>
+'use strict';
+
+const DEFAULT_LOCATION = {lat:37.5665, lng:126.9780};
+const DEFAULT_ZOOM = 14.5;
+const route = {type:'Feature', geometry:{type:'MultiLineString', coordinates:[]}, properties:{}};
+const roadClass = ['get', 'class'];
+const mainRoads = ['motorway','trunk','primary'];
+const localRoads = ['secondary','tertiary','minor','service'];
+const roadFilter = ['all', ['==',['geometry-type'],'LineString'],
+  ['match',roadClass,[...mainRoads,...localRoads],true,false]];
+const roadWidth = (minor, major) => ['match',roadClass,mainRoads,major,minor];
+const detailStyle = __TRIP_DETAIL_STYLE__;
+const recordingStyle = __TRIP_RECORDING_STYLE__;
+if (recordingStyle) document.body.classList.add('live-recording');
+const palette = detailStyle ? {
+  land:'#f0f1f5',
+  park:'#e1ebe7',
+  water:'#b4daf7',
+  road:'#fff',
+  mainRoad:'#fff',
+  roadEdge:'#dbe2eb',
+  mainRoadEdge:'#bfd9f3'
+} : {
+  land:'#f2f2f2',
+  park:'#f8f8f8',
+  water:'#c4c7c9',
+  road:'#fbfbfb',
+  mainRoad:'#fdfdfd',
+  roadEdge:'#dedede',
+  mainRoadEdge:'#d1d1d1'
+};
+const geographicName = ['coalesce',['get','name:ko'],['get','name'],''];
+const geographicLabel = (id, sourceLayer, extraLayout = {}, filter = undefined) => ({
+  id,type:'symbol',source:'streets','source-layer':sourceLayer,filter,
+  layout:{
+    'text-field':geographicName,'text-font':['Noto Sans Regular'],
+    ...extraLayout
+  },
+  paint:{'text-color':'#747e89','text-halo-color':'#f8fafc','text-halo-width':1}
+});
+const style = {
+  version:8,
+  ...(detailStyle && {glyphs:'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf'}),
+  sources:{
+    streets:{
+      type:'vector',
+      url:'https://tiles.openfreemap.org/planet'
+    },
+    trip:{type:'geojson',data:route,lineMetrics:true}
+  },
+  layers:[
+    {id:'land',type:'background',paint:{'background-color':palette.land}},
+    ...(detailStyle ? [{id:'landcover',type:'fill',source:'streets','source-layer':'landcover',minzoom:9,
+      filter:['match',['get','class'],['wood','grass'],true,false],
+      paint:{'fill-color':['match',['get','class'],'wood','#e7e9ed','#e4eee9'],'fill-opacity':.8}}] : []),
+    {id:'park',type:'fill',source:'streets','source-layer':'park',minzoom:11,paint:{'fill-color':palette.park}},
+    {id:'waterway',type:'line',source:'streets','source-layer':'waterway',
+      filter:['match',['get','class'],['river','canal','stream'],true,false],
+      paint:{'line-color':palette.water,'line-width':['interpolate',['linear'],['zoom'],10,.7,16,2.4]}},
+    {id:'water',type:'fill',source:'streets','source-layer':'water',paint:{'fill-color':palette.water}},
+    {id:'road-edge',type:'line',source:'streets','source-layer':'transportation',filter:roadFilter,
+      layout:{'line-cap':'round','line-join':'round'},
+      paint:{'line-color':roadWidth(palette.roadEdge,palette.mainRoadEdge),
+        'line-width':['interpolate',['linear'],['zoom'],8,roadWidth(.6,1.3),14,roadWidth(3.6,8),17,roadWidth(7.8,17)]}},
+    {id:'road-fill',type:'line',source:'streets','source-layer':'transportation',filter:roadFilter,
+      layout:{'line-cap':'round','line-join':'round'},
+      paint:{'line-color':roadWidth(palette.road,palette.mainRoad),
+        'line-width':['interpolate',['linear'],['zoom'],8,0,14,roadWidth(2.6,6),17,roadWidth(6.2,14)]}},
+    ...(detailStyle ? [
+      geographicLabel('water-names','water_name',{'symbol-placement':'point','text-size':14},
+        ['==',['geometry-type'],'Point']),
+      geographicLabel('river-names','waterway',{'symbol-placement':'line','symbol-spacing':360,'text-size':13},
+        ['==',['get','class'],'river']),
+      geographicLabel('city-names','place',{'text-size':['interpolate',['linear'],['zoom'],7,12,14,19]},
+        ['match',['get','class'],['city','town'],true,false]),
+    ] : []),
+    {id:'route-edge',type:'line',source:'trip',layout:{'line-cap':'round','line-join':'round'},
+      paint:{'line-color':'#fff','line-width':8}},
+    {id:'route',type:'line',source:'trip',layout:{'line-cap':'round','line-join':'round'},
+      paint:detailStyle ? {'line-width':5,'line-color':'#0066ff'} :
+        {'line-width':5,'line-gradient':['interpolate',['linear'],['line-progress'],
+        0,'#0cebd7',.5,'#20bff0',1,'#1074fa']}}
+  ]
+};
+
+let map, last, rendered = false, fitted = false, lastStopCount = -1, lastWasDefault;
+let resultFitted = false;
+let viewportMode = 'overview';
+let markers = [];
+let demoMarker, demoPosition, demoTarget, demoFrame, demoLabelKey;
+let demoRouteOverlay, demoRouteLine;
+let demoRoutePoints = [], demoProjectedPoints;
+const recenter = document.getElementById('recenter');
+const mapElement = document.getElementById('map');
+const send = (name,...args) => {
+  if (window.TripMap && typeof TripMap[name] === 'function') TripMap[name](...args);
+};
+const lngLat = point => [point.lng, point.lat];
+const currentLocation = data => data.latest || (data.points || []).at(-1) || (data.stops || []).at(-1);
+const holdViewport = () => {
+  if (last?.interactive) viewportMode = 'free';
+};
+mapElement.addEventListener('wheel', holdViewport, {passive:true,capture:true});
+mapElement.addEventListener('touchstart', event => {
+  if (event.touches.length > 1) holdViewport();
+}, {passive:true,capture:true});
+window.tripRecordingRecenter = function() {
+  if (!rendered || !last?.interactive) return;
+  viewportMode = 'follow';
+  const center = lngLat(demoPosition || currentLocation(last) || DEFAULT_LOCATION);
+  if (demoMarker && last.animateCamera) map.easeTo({center,zoom:DEFAULT_ZOOM,duration:500});
+  else map.jumpTo({center,zoom:DEFAULT_ZOOM});
+};
+recenter.addEventListener('click', window.tripRecordingRecenter);
+
+function marker(point, className, text, offset) {
+  const element = document.createElement('div');
+  element.className = className;
+  element.textContent = text;
+  markers.push(new maplibregl.Marker({element,offset}).setLngLat(lngLat(point)).addTo(map));
+  return element;
+}
+
+let recordingHeading;
+function travelHeading(from, to, minimumMeters = .05) {
+  if (!from || !to || to.gap || from.at >= to.at) return null;
+  const longitudeDelta = ((to.lng - from.lng + 540) % 360) - 180;
+  const east = longitudeDelta * Math.cos((from.lat + to.lat) * Math.PI / 360);
+  const north = to.lat - from.lat;
+  if (Math.hypot(east, north) * 111195 < minimumMeters) return null;
+  return Math.atan2(east, north) * 180 / Math.PI;
+}
+
+function recentHeading(points, current) {
+  if (current.gap) return null;
+  for (let i = points.length - 1; i >= 0; i--) {
+    const point = points[i];
+    if (point.at > current.at) continue;
+    if (current.at - point.at > 30_000) break;
+    const heading = travelHeading(point, current, 4);
+    if (heading !== null) return heading;
+    if (point.gap) break;
+  }
+  return null;
+}
+
+function orientRecordingCar(element, heading) {
+  if (!recordingStyle || heading === null) return;
+  if (recordingHeading === undefined) recordingHeading = heading;
+  else recordingHeading += ((heading - recordingHeading) % 360 + 540) % 360 - 180;
+  element.style.setProperty('--car-heading', recordingHeading + 'deg');
+}
+
+function recordingPositionElement(label) {
+  const element = document.createElement('div');
+  element.className = 'recording-position';
+  element.setAttribute('role','img');
+  element.setAttribute('aria-label',label);
+  if (recordingStyle) {
+    const car = new Image();
+    car.alt = '';
+    car.src = 'https://appassets.androidplatform.net/endingcredit/a4-car.png';
+    const artwork = document.createElement('div');
+    artwork.className = 'recording-car';
+    artwork.append(car);
+    element.append(artwork);
+    orientRecordingCar(element, recordingHeading ?? null);
+    return element;
+  }
+  for (const [part, size] of [['radius',120],['dot',36]]) {
+    const art = new Image(size,size);
+    art.alt = '';
+    art.className = 'recording-position-' + part;
+    art.src = 'https://appassets.androidplatform.net/endingcredit/departure-' + part + '.svg';
+    element.append(art);
+  }
+  return element;
+}
+
+function showRecordingPosition(point, points) {
+  const label = Date.now() - point.at <= 30_000 ? '현재 위치' : '마지막 확인 위치';
+  const element = recordingPositionElement(label);
+  orientRecordingCar(element, recentHeading(points, point));
+  markers.push(new maplibregl.Marker({element}).setLngLat(lngLat(point)).addTo(map));
+}
+
+function drawDemoFrame() {
+  if (!demoMarker || !demoPosition) return;
+  demoProjectedPoints ??= demoRoutePoints.map(point => ({
+    at:point.at, gap:point.gap, xy:map.project(lngLat(point))
+  }));
+  const end = map.project(lngLat(demoPosition));
+  let path = '';
+  for (const point of demoProjectedPoints) {
+    if (point.at >= demoPosition.at) break;
+    path += (point.gap || !path ? 'M' : 'L') + point.xy.x.toFixed(1) + ' ' + point.xy.y.toFixed(1);
+  }
+  const x = end.x.toFixed(1), y = end.y.toFixed(1);
+  path += (demoPosition.gap || !path ? 'M' : 'L') + x + ' ' + y;
+  demoRouteLine.setAttribute('d', path);
+  demoMarker.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
+}
+
+function placeDemoMarker(point, heading = null) {
+  demoPosition = point;
+  orientRecordingCar(demoMarker, heading);
+  drawDemoFrame();
+}
+
+function updateDemoMarker(point, points, routePoints, duration) {
+  cancelAnimationFrame(demoFrame);
+  const from = demoPosition;
+  demoTarget = point;
+  demoRoutePoints = routePoints;
+  demoProjectedPoints = undefined;
+  if (!demoMarker) {
+    demoRouteOverlay = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    demoRouteOverlay.setAttribute('class', 'demo-route-overlay');
+    demoRouteOverlay.setAttribute('aria-hidden', 'true');
+    demoRouteOverlay.innerHTML = '<defs><path id="demo-route-shape"/></defs>' +
+      '<use href="#demo-route-shape" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<use href="#demo-route-shape" fill="none" stroke="#0066ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
+    demoRouteLine = demoRouteOverlay.querySelector('path');
+    map.getCanvas().insertAdjacentElement('afterend', demoRouteOverlay);
+    demoMarker = recordingPositionElement('현재 위치');
+    demoMarker.classList.add('demo-moving-car');
+    map.getCanvasContainer().append(demoMarker);
+    if (route.geometry.coordinates.length) {
+      route.geometry.coordinates = [];
+      map.getSource('trip').setData(route);
+    }
+  }
+  if (!duration || !from || point.at <= from.at) {
+    placeDemoMarker(point, recentHeading(routePoints, point));
+    return;
+  }
+  drawDemoFrame();
+  const track = [from, ...points.filter(p => from.at < p.at && p.at < point.at), point];
+  const finalHeading = recentHeading(track, point);
+  const start = performance.now();
+  let next = 1;
+  function frame(now) {
+    const elapsed = now - start;
+    if (elapsed >= duration) {
+      placeDemoMarker(point, finalHeading);
+      return;
+    }
+    const at = from.at + (point.at - from.at) * Math.max(0, elapsed) / duration;
+    while (next < track.length - 1 && track[next].at < at) next++;
+    const a = track[next - 1];
+    const b = track[next];
+    const part = (at - a.at) / (b.at - a.at);
+    placeDemoMarker({at, lat:a.lat + (b.lat - a.lat) * part, lng:a.lng + (b.lng - a.lng) * part}, travelHeading(a, b));
+    demoFrame = requestAnimationFrame(frame);
+  }
+  demoFrame = requestAnimationFrame(frame);
+}
+
+window.tripPause = function() {
+  cancelAnimationFrame(demoFrame);
+  if (demoMarker) placeDemoMarker(demoTarget, recentHeading(last.demoTrack || last.points || [], demoTarget));
+  if (map) map.stop();
+};
+
+function updateDemoViewport(data, previous, location) {
+  if (viewportMode === 'free') return;
+  const center = lngLat(location);
+  const duration = data.animateCamera ? 650 : 0;
+  const padding = Math.min(64,mapElement.clientWidth / 5,mapElement.clientHeight / 5);
+  if (data.demoArrived && (!previous?.demoArrived || previous.latest?.at !== location.at)) {
+    const checkpoint = data.stops?.find(stop => stop.at === location.at);
+    if (checkpoint) {
+      const bounds = new maplibregl.LngLatBounds(center,center).extend(lngLat(checkpoint));
+      map.fitBounds(bounds,{padding,maxZoom:DEFAULT_ZOOM,duration,linear:true});
+    } else map.easeTo({center,zoom:DEFAULT_ZOOM,duration});
+  } else if (viewportMode === 'follow' && previous?.latest?.at !== location.at) {
+    map.easeTo({center,duration:data.animationMillis,easing:t => t});
+  } else if (!data.demoArrived && data.demoScene !== previous?.demoScene) {
+    map.fitBounds(data.demoBounds,{padding,maxZoom:DEFAULT_ZOOM,duration,linear:true});
+  }
+}
+
+function addRouteStop(stop, index, total) {
+  const kind = stop.pending ? 'pending' : index === total - 1 ? 'last' : '';
+  const element = marker(stop, 'route-stop ' + kind, '', [0, 0]);
+  element.style.setProperty('--stop-accent', '#' + stop.accent.toString(16).padStart(6, '0'));
+  const number = document.createElement('span');
+  number.className = 'route-stop-number';
+  number.textContent = stop.pending && !mapElement.classList.contains('trip-detail') ? '?' : String(stop.index || index + 1);
+  element.append(number);
+  if (stop.name) {
+    const label = document.createElement('span');
+    label.className = 'label route-stop-label';
+    label.textContent = stop.name;
+    element.append(label);
+    positionStopLabel(element, stop);
+  }
+}
+
+function positionStopLabel(element, stop) {
+  const label = element.querySelector('.route-stop-label');
+  if (!label) return;
+  const remaining = mapElement.clientWidth - map.project(lngLat(stop)).x;
+  element.classList.toggle('label-left', remaining < label.offsetWidth + 23);
+}
+
+function recordingPadding(expanded) {
+  return {left:0, right:expanded ? 0 : Math.round(mapElement.clientWidth * .47), top:0, bottom:0};
+}
+
+window.tripRecordingExpand = function(expanded) {
+  if (!recordingStyle || !last || !rendered) return;
+  last.recordingExpanded = expanded;
+  map.setPadding(recordingPadding(expanded));
+};
+
+window.tripDetailFit = function(expanded) {
+  if (!last?.tripDetail || !rendered) return;
+  last.detailExpanded = expanded;
+  const points = [...(last.points || []), ...(last.stops || [])];
+  if (!points.length) return;
+  const bounds = new maplibregl.LngLatBounds(lngLat(points[0]), lngLat(points[0]));
+  points.forEach(point => bounds.extend(lngLat(point)));
+  const w = mapElement.clientWidth;
+  const h = mapElement.clientHeight;
+  map.fitBounds(bounds, {maxZoom: DEFAULT_ZOOM, duration: 0, padding: {
+    left: Math.round(w * .07), top: Math.round(h * .21), bottom: Math.round(h * .23),
+    right: Math.round(w * (expanded ? .08 : .53))
+  }});
+};
+
+window.tripResultFit = function(expanded) {
+  if (!last?.tripResult || !rendered) return;
+  last.detailExpanded = expanded;
+  const points = [...(last.points || []), ...(last.stops || [])];
+  const known = currentLocation(last);
+  if (known) points.push(known);
+  if (!points.length) return;
+  const bounds = new maplibregl.LngLatBounds(lngLat(points[0]), lngLat(points[0]));
+  points.forEach(point => bounds.extend(lngLat(point)));
+  const w = mapElement.clientWidth;
+  const h = mapElement.clientHeight;
+  map.fitBounds(bounds, {maxZoom:DEFAULT_ZOOM, duration:0, padding:{
+    left:Math.round(w * .07), right:Math.round(w * (expanded ? .08 : .53)),
+    top:Math.round(h * (expanded ? .1 : .26)), bottom:Math.round(h * (expanded ? .1 : .24))
+  }});
+};
+
+window.tripRender = function(data) {
+  mapElement.classList.toggle('trip-detail', !!data.tripDetail);
+  const previous = last;
+  last = data;
+  document.getElementById('recording-header-backdrop').hidden = !data.headerBackdrop;
+  if (!rendered) return;
+  if (recordingStyle && (!previous || previous.recordingExpanded !== data.recordingExpanded)) {
+    map.setPadding(recordingPadding(!!data.recordingExpanded));
+  }
+
+
+  const handlers = [map.dragPan,map.scrollZoom,map.touchZoomRotate];
+  for (const handler of handlers) data.interactive ? handler.enable() : handler.disable();
+  map.touchZoomRotate.disableRotation();
+  if (!data.interactive) viewportMode = 'overview';
+
+  const points = data.points || [];
+  const stops = data.stops || [];
+  const known = currentLocation(data);
+  const location = known || DEFAULT_LOCATION;
+  const usingDefault = !known;
+  const recordingPosition = data.recordingPosition && data.active;
+  const demoPlayback = recordingPosition && data.latest && typeof data.demoArrived === 'boolean';
+  const bounds = new maplibregl.LngLatBounds(lngLat(location),lngLat(location));
+  const segments = [];
+  let segment = [];
+  for (const point of points) {
+    if (point.gap) {
+      if (segment.length > 1) segments.push(segment);
+      segment = [];
+    }
+    const coordinate = lngLat(point);
+    bounds.extend(coordinate);
+    segment.push(coordinate);
+  }
+  if (!demoPlayback) {
+    if (segment.length > 1) segments.push(segment);
+    route.geometry.coordinates = segments;
+    map.getSource('trip').setData(route);
+  }
+
+  const departure = points[0] || (recordingPosition ? data.latest : null);
+  const labelKey = demoPlayback ? JSON.stringify([departure,data.startedAt,stops]) : null;
+  stops.forEach(stop => bounds.extend(lngLat(stop)));
+  if (labelKey == null || labelKey !== demoLabelKey) {
+    for (const item of markers) item.remove();
+    markers = [];
+    if (departure) {
+      const time = new Date(data.startedAt).toLocaleTimeString('ko-KR',{timeZone:data.demo?'Asia/Seoul':undefined,hour:'2-digit',minute:'2-digit',hour12:false});
+      const offset = recordingPosition ? 71 * mapElement.clientWidth / 828 : 15;
+      marker(departure,recordingPosition ? 'departure-label' : 'label','출발 · '+time,[0,offset]);
+    }
+    stops.forEach((stop,index) => {
+      addRouteStop(data.tripDetail ? {...stop, accent: 0x0066ff} : stop, index, stops.length);
+    });
+  }
+  demoLabelKey = labelKey;
+  if (demoPlayback) updateDemoMarker(data.latest,data.demoTrack || [],points,data.animationMillis);
+  else if (demoMarker) {
+    cancelAnimationFrame(demoFrame);
+    demoMarker.remove();
+    demoRouteOverlay.remove();
+    demoMarker = demoPosition = demoTarget = null;
+    demoRouteOverlay = demoRouteLine = demoProjectedPoints = undefined;
+    demoRoutePoints = [];
+  }
+  if (!demoPlayback && recordingPosition) {
+    if (data.latest) showRecordingPosition(data.latest, points);
+    else marker(location,'label',usingDefault ? '기본 위치 · 서울' : '마지막 위치',[0,-23]);
+  } else if (!demoPlayback) {
+    marker(location,'now','',[0,0]);
+    marker(location,'label',usingDefault ? '기본 위치 · 서울' : data.active && data.latest ? '지금 여기' : '마지막 위치',[0,-23]);
+  }
+  recenter.hidden = !data.interactive || !!data.tripDetail || !!data.tripResult || recordingStyle;
+  recenter.textContent = usingDefault ? '기본 위치' : '내 위치';
+  recenter.setAttribute('aria-label',usingDefault ? '서울 기본 위치로 이동' : '현재 위치로 이동');
+
+  if (demoPlayback && !data.tripResult) {
+    updateDemoViewport(data,previous,location);
+    return;
+  }
+  if (data.tripResult) {
+    if (!resultFitted || stops.length !== lastStopCount) window.tripResultFit(!!data.detailExpanded);
+    resultFitted = true;
+    lastStopCount = stops.length;
+    return;
+  }
+  if (data.tripDetail) { window.tripDetailFit(!!data.detailExpanded); return; }
+  const singlePoint = points.length <= 1 && !stops.length;
+  if (viewportMode === 'follow') map.jumpTo({center:lngLat(location)});
+  else if (viewportMode !== 'free' &&
+    (!fitted || !data.interactive || stops.length !== lastStopCount || usingDefault !== lastWasDefault || singlePoint)) {
+    if (usingDefault || singlePoint) map.jumpTo({center:lngLat(location),zoom:DEFAULT_ZOOM});
+    else map.fitBounds(bounds,{padding:35,maxZoom:DEFAULT_ZOOM,duration:0});
+    fitted = true;
+    lastStopCount = stops.length;
+  }
+  lastWasDefault = usingDefault;
+};
+
+try {
+  map = new maplibregl.Map({
+    localIdeographFontFamily:'sans-serif',
+    container:mapElement,style,center:lngLat(DEFAULT_LOCATION),zoom:DEFAULT_ZOOM,
+    ...(recordingStyle && {padding:recordingPadding(false)}),
+    minZoom:4,maxZoom:19,interactive:true,dragPan:false,scrollZoom:false,boxZoom:false,
+    doubleClickZoom:false,dragRotate:false,pitchWithRotate:false,touchPitch:false,touchZoomRotate:false,keyboard:false,
+    renderWorldCopies:false,attributionControl:false,maxPitch:0,
+    canvasContextAttributes:{preserveDrawingBuffer:true}
+  });
+  map.addControl(new maplibregl.AttributionControl({compact:false}),'bottom-left');
+  map.on('move', () => {
+    demoProjectedPoints = undefined;
+    drawDemoFrame();
+  });
+  map.on('moveend', () => {
+    const stops = last?.stops || [];
+    const elements = mapElement.querySelectorAll('.route-stop');
+    stops.forEach((stop, index) => {
+      if (elements[index]) positionStopLabel(elements[index], stop);
+    });
+  });
+  map.on('dragstart',holdViewport);
+  map.on('zoomstart',event => { if (event.originalEvent) holdViewport(); });
+  map.on('error', () => { if (!rendered) send('status','지도 연결을 확인해 주세요'); });
+  map.once('load', () => {
+    rendered = true;
+    tripRender(last || {active:true,interactive:false});
+    send('ready');
+  });
+} catch (error) {
+  send('status','지도를 불러오지 못했어요. 연결을 확인해 주세요');
+}
+</script>
+<script>
+'use strict';
+
+const groups=['MT1','CS2','PS3','SC4','AC5','PK6','OL7','SW8','BK9','CT1','AG2','PO3','AT4','AD5','FD6','CE7','HP8','PM9'];
+let jobs=[],busy=false,searchReady=false,searchFailed=false;
+window.tripSearch=function(id,lat,lng){if(searchFailed){send('candidates',id,'[]',false);return}jobs.push({id,lat,lng});drain()};
+async function drain(){if(busy||!searchReady||!jobs.length)return;busy=true;const job=jobs.shift(), service=new kakao.maps.services.Places();let all=new Map(),complete=true;
+ const query=(group,page)=>new Promise(resolve=>{let done=false;const timeout=setTimeout(()=>{if(!done){done=true;resolve({ok:false,rows:[],more:false})}},10000);const cb=(rows,status,pagination)=>{if(done)return;done=true;clearTimeout(timeout);resolve({ok:status===kakao.maps.services.Status.OK||status===kakao.maps.services.Status.ZERO_RESULT,rows:status===kakao.maps.services.Status.OK?rows:[],more:!!(pagination&&pagination.hasNextPage)})};const options={location:new kakao.maps.LatLng(job.lat,job.lng),radius:200,sort:kakao.maps.services.SortBy.DISTANCE,size:15,page};try{if(group==='REST')service.keywordSearch('휴게소',cb,options);else service.categorySearch(group,cb,options)}catch(e){clearTimeout(timeout);resolve({ok:false,rows:[],more:false})}});
+ for(const group of ['REST',...groups]){for(let page=1;page<=3;page++){const r=await query(group,page);if(!r.ok){complete=false;break}r.rows.forEach(p=>{const distance=Number(p.distance);if(Number.isFinite(distance)&&distance<=200){all.set(p.id,{id:String(p.id),name:p.place_name,category:p.category_name,address:p.road_address_name||p.address_name||"",roadAddress:p.road_address_name||"",distance,restArea:/휴게소(?:\s*\([^)]*\))?$/.test(p.place_name)&&/휴게소/.test(p.category_name)})}});if(!r.more)break;if(page===3)complete=false}}
+ const rows=[...all.values()].sort((a,b)=>Number(b.restArea)-Number(a.restArea)||a.distance-b.distance).slice(0,3);send('candidates',job.id,JSON.stringify(rows),complete);busy=false;drain();
+}
+const addressJobs = [];
+let addressBusy = false;
+window.tripLookupAddress = function(id, lat, lng) {
+  if (searchFailed) {
+    send('resolvedAddress', id, '');
+    return;
+  }
+  addressJobs.push({id, lat, lng});
+  drainAddresses();
+};
+function drainAddresses() {
+  if (addressBusy || !searchReady || !addressJobs.length) return;
+  addressBusy = true;
+  const {id, lat, lng} = addressJobs.shift();
+  let finished = false;
+  const finish = address => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timeout);
+    send('resolvedAddress', id, address);
+    addressBusy = false;
+    drainAddresses();
+  };
+  const timeout = setTimeout(() => finish(''), 8000);
+  try {
+    const geocoder = new kakao.maps.services.Geocoder();
+    geocoder.coord2Address(lng, lat, (results, status) => {
+      const place = status === kakao.maps.services.Status.OK ? results[0] : null;
+      finish(place?.road_address?.address_name || '');
+    });
+  } catch (_) {
+    finish('');
+  }
+}
+send('searchPageReady');
+const key = __KAKAO_KEY_JSON__;
+function failSearch() {
+  searchFailed = true;
+  for (const job of jobs.splice(0)) send('candidates',job.id,'[]',false);
+  for (const job of addressJobs.splice(0)) send('resolvedAddress',job.id,'');
+}
+if (key) {
+  const script = document.createElement('script');
+  script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&libraries=services&appkey='+encodeURIComponent(key);
+  const timeout = setTimeout(failSearch,20000);
+  script.onerror = () => {clearTimeout(timeout);failSearch();};
+  script.onload = () => {
+    if (!window.kakao?.maps?.load) {clearTimeout(timeout);failSearch();return;}
+    kakao.maps.load(() => {
+      clearTimeout(timeout);
+      if (searchFailed || !kakao.maps.services?.Places) {failSearch();return;}
+      searchReady = true;
+      drain();
+      drainAddresses();
+    });
+  };
+  document.head.appendChild(script);
+} else failSearch();
+</script>
+</body>
+</html>

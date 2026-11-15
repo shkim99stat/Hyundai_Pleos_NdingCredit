@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="wireframe_padding">36dp</dimen>
+    <dimen name="wireframe_title">38sp</dimen>
+    <dimen name="wireframe_text">20sp</dimen>
+    <dimen name="wireframe_touch">64dp</dimen>
+    <dimen name="wireframe_media_height">340dp</dimen>
+</resources>

@@ -1,0 +1,667 @@
+{
+  "source": {
+    "filename": "현대 APP 공모전 (복사).fig",
+    "byteLength": 234001878,
+    "sha256": "555314178d34f37cff080dea37fc5641c085099b1a1765bb1ea25a2a3d0ac21e",
+    "containerVersion": 106,
+    "chunkCount": 2,
+    "frameId": "96:21524",
+    "applicationNodeId": "96:21525",
+    "contentNodeId": "96:21526",
+    "screenshotIdentifier": "Rectangle 346244422",
+    "originalTwinFrameId": "72:23279"
+  },
+  "width": 1700,
+  "height": 1184,
+  "nodes": [
+    {
+      "id": "96:21525",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1184,
+      "type": "FRAME",
+      "name": "Application window · Landscape · 1700×1184"
+    },
+    {
+      "id": "96:21526",
+      "x": 2,
+      "y": 2,
+      "width": 1696,
+      "height": 1180,
+      "type": "FRAME",
+      "name": "Application content"
+    },
+    {
+      "id": "96:21527",
+      "x": 58,
+      "y": 307.880126953125,
+      "width": 1584,
+      "height": 46.38999938964844,
+      "type": "FRAME",
+      "name": "Heading"
+    },
+    {
+      "id": "96:21528",
+      "x": 58,
+      "y": 307.880126953125,
+      "width": 127.2300033569336,
+      "height": 46,
+      "type": "TEXT",
+      "name": "Heading",
+      "text": "최근 여행",
+      "fontSize": 32,
+      "baseline": 35.79999923706055,
+      "weight": 700,
+      "color": "#ff222222"
+    },
+    {
+      "id": "96:21529",
+      "x": 58,
+      "y": 1038,
+      "width": 1584,
+      "height": 96,
+      "type": "FRAME",
+      "name": "Action"
+    },
+    {
+      "id": "96:21530",
+      "x": 790.5900268554688,
+      "y": 1063.25,
+      "width": 119.30999755859375,
+      "height": 44,
+      "type": "TEXT",
+      "name": "Action",
+      "text": "여행 시작",
+      "fontSize": 30,
+      "baseline": 34,
+      "weight": 700,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21531",
+      "x": 58,
+      "y": 141.800048828125,
+      "width": 1584,
+      "height": 138,
+      "type": "FRAME",
+      "name": "Content"
+    },
+    {
+      "id": "96:21532",
+      "x": 1080.4199829101562,
+      "y": 174.83004760742188,
+      "width": 530.5800170898438,
+      "height": 72,
+      "type": "FRAME",
+      "name": "Content"
+    },
+    {
+      "id": "96:21533",
+      "x": 1459.9499816894531,
+      "y": 174.83004760742188,
+      "width": 151.0500030517578,
+      "height": 72,
+      "type": "FRAME",
+      "name": "Action"
+    },
+    {
+      "id": "96:21534",
+      "x": 1487.9499816894531,
+      "y": 192.42004776000977,
+      "width": 95.55000305175781,
+      "height": 35,
+      "type": "TEXT",
+      "name": "Action",
+      "text": "이어 보기",
+      "fontSize": 24,
+      "baseline": 27.100000381469727,
+      "weight": 700,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21535",
+      "x": 1244.749984741211,
+      "y": 174.83004760742188,
+      "width": 201.1999969482422,
+      "height": 72,
+      "type": "FRAME",
+      "name": "Action"
+    },
+    {
+      "id": "96:21536",
+      "x": 1275.749984741211,
+      "y": 192.42004776000977,
+      "width": 139.6999969482422,
+      "height": 35,
+      "type": "TEXT",
+      "name": "Action",
+      "text": "마지막 장면만",
+      "fontSize": 24,
+      "baseline": 27.100000381469727,
+      "weight": 700,
+      "color": "#ff222222"
+    },
+    {
+      "id": "96:21537",
+      "x": 1080.4199829101562,
+      "y": 174.83004760742188,
+      "width": 150.3300018310547,
+      "height": 72,
+      "type": "FRAME",
+      "name": "Action"
+    },
+    {
+      "id": "96:21538",
+      "x": 1111.4199829101562,
+      "y": 192.42004776000977,
+      "width": 88.83000183105469,
+      "height": 35,
+      "type": "TEXT",
+      "name": "Action",
+      "text": "처음부터",
+      "fontSize": 24,
+      "baseline": 27.100000381469727,
+      "weight": 700,
+      "color": "#ff222222"
+    },
+    {
+      "id": "96:21539",
+      "x": 89,
+      "y": 168.800048828125,
+      "width": 542.0599975585938,
+      "height": 84.08000183105469,
+      "type": "FRAME",
+      "name": "Content"
+    },
+    {
+      "id": "96:21540",
+      "x": 89,
+      "y": 215.19004821777344,
+      "width": 542.0599975585938,
+      "height": 37.689998626708984,
+      "type": "FRAME",
+      "name": "Description"
+    },
+    {
+      "id": "96:21541",
+      "x": 89,
+      "y": 215.19004821777344,
+      "width": 332.7699890136719,
+      "height": 37,
+      "type": "TEXT",
+      "name": "Description",
+      "text": "출발해서 멈췄어요 (장면 3 / 6)",
+      "fontSize": 26,
+      "baseline": 28.899999618530273,
+      "weight": 400,
+      "color": "#ff666666"
+    },
+    {
+      "id": "96:21542",
+      "x": 89,
+      "y": 168.800048828125,
+      "width": 542.0599975585938,
+      "height": 46.38999938964844,
+      "type": "FRAME",
+      "name": "Heading"
+    },
+    {
+      "id": "96:21543",
+      "x": 89,
+      "y": 168.800048828125,
+      "width": 542.5599975585938,
+      "height": 46,
+      "type": "TEXT",
+      "name": "Heading",
+      "text": "보던 크레딧이 있어요 · 우리의 강릉 여행",
+      "fontSize": 32,
+      "baseline": 35.79999923706055,
+      "weight": 700,
+      "color": "#ff222222"
+    },
+    {
+      "id": "96:21544",
+      "x": 58,
+      "y": 50,
+      "width": 1584,
+      "height": 63.79999923706055,
+      "type": "FRAME",
+      "name": "Header"
+    },
+    {
+      "id": "96:21545",
+      "x": 58,
+      "y": 50,
+      "width": 174.25,
+      "height": 63.79999923706055,
+      "type": "FRAME",
+      "name": "Title"
+    },
+    {
+      "id": "96:21546",
+      "x": 58,
+      "y": 49,
+      "width": 174.75,
+      "height": 64,
+      "type": "TEXT",
+      "name": "Title",
+      "text": "여행 도감",
+      "fontSize": 44,
+      "baseline": 49.599998474121094,
+      "weight": 700,
+      "color": "#ff222222"
+    },
+    {
+      "id": "96:21547",
+      "x": 58,
+      "y": 379.135009765625,
+      "width": 420,
+      "height": 630,
+      "type": "FRAME",
+      "name": "Application window · Landscape · 1700×1184"
+    },
+    {
+      "id": "96:21548",
+      "x": 57.999969482421875,
+      "y": 379.135009765625,
+      "width": 420.0000305175781,
+      "height": 630,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "속초 2"
+    },
+    {
+      "id": "96:21549",
+      "x": 58,
+      "y": 696.51953125,
+      "width": 420,
+      "height": 312.615478515625,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "Rectangle 346244421"
+    },
+    {
+      "id": "96:21550",
+      "x": 77.6787109375,
+      "y": 876.6775817871094,
+      "width": 125,
+      "height": 46,
+      "type": "TEXT",
+      "name": "강릉 여행",
+      "text": "강릉 여행",
+      "fontSize": 32,
+      "baseline": 36.95199966430664,
+      "weight": 700,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21551",
+      "x": 77.6787109375,
+      "y": 923.6775512695312,
+      "width": 175,
+      "height": 35,
+      "type": "TEXT",
+      "name": "2026년 몇월 몇일",
+      "text": "2026년 몇월 몇일",
+      "fontSize": 24,
+      "baseline": 27.964000701904297,
+      "weight": 400,
+      "color": "#adffffff"
+    },
+    {
+      "id": "96:21552",
+      "x": 409.6787109375,
+      "y": 412.864990234375,
+      "width": 48,
+      "height": 48,
+      "type": "FRAME",
+      "name": "Frame 183"
+    },
+    {
+      "id": "96:21553",
+      "x": 444.08063888549805,
+      "y": 434.42111587524414,
+      "width": 5.138753414154053,
+      "height": 20.55501365661621,
+      "type": "VECTOR",
+      "name": "Vector"
+    },
+    {
+      "id": "96:21554",
+      "x": 213.5087890625,
+      "y": 882.1775817871094,
+      "width": 108,
+      "height": 35,
+      "type": "TEXT",
+      "name": "대충 제목 수정 아이콘",
+      "text": "대충 제목 수정 아이콘",
+      "fontSize": 12,
+      "baseline": 22.73200035095215,
+      "weight": 400,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21555",
+      "x": 502,
+      "y": 379.135009765625,
+      "width": 420,
+      "height": 630,
+      "type": "FRAME",
+      "name": "Application window · Landscape · 1700×1184"
+    },
+    {
+      "id": "96:21556",
+      "x": 501.9999694824219,
+      "y": 379.135009765625,
+      "width": 420.0000305175781,
+      "height": 630,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "속초 2"
+    },
+    {
+      "id": "96:21557",
+      "x": 502,
+      "y": 696.51953125,
+      "width": 420,
+      "height": 312.615478515625,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "Rectangle 346244421"
+    },
+    {
+      "id": "96:21558",
+      "x": 521.6787109375,
+      "y": 876.6775817871094,
+      "width": 125,
+      "height": 46,
+      "type": "TEXT",
+      "name": "경주 여행",
+      "text": "경주 여행",
+      "fontSize": 32,
+      "baseline": 36.95199966430664,
+      "weight": 700,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21559",
+      "x": 521.6787109375,
+      "y": 923.6775512695312,
+      "width": 175,
+      "height": 35,
+      "type": "TEXT",
+      "name": "2026년 몇월 몇일",
+      "text": "2026년 몇월 몇일",
+      "fontSize": 24,
+      "baseline": 27.964000701904297,
+      "weight": 400,
+      "color": "#adffffff"
+    },
+    {
+      "id": "96:21560",
+      "x": 853.6787109375,
+      "y": 412.864990234375,
+      "width": 48,
+      "height": 48,
+      "type": "FRAME",
+      "name": "Frame 183"
+    },
+    {
+      "id": "96:21561",
+      "x": 888.080638885498,
+      "y": 434.42111587524414,
+      "width": 5.138753414154053,
+      "height": 20.55501365661621,
+      "type": "VECTOR",
+      "name": "Vector"
+    },
+    {
+      "id": "96:21562",
+      "x": 657.5087890625,
+      "y": 882.1775817871094,
+      "width": 108,
+      "height": 35,
+      "type": "TEXT",
+      "name": "대충 제목 수정 아이콘",
+      "text": "대충 제목 수정 아이콘",
+      "fontSize": 12,
+      "baseline": 22.73200035095215,
+      "weight": 400,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21563",
+      "x": 946,
+      "y": 379.135009765625,
+      "width": 420,
+      "height": 630,
+      "type": "FRAME",
+      "name": "Application window · Landscape · 1700×1184"
+    },
+    {
+      "id": "96:21564",
+      "x": 945.9999694824219,
+      "y": 379.135009765625,
+      "width": 420.0000305175781,
+      "height": 630,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "속초 2"
+    },
+    {
+      "id": "96:21565",
+      "x": 946,
+      "y": 696.51953125,
+      "width": 420,
+      "height": 312.615478515625,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "Rectangle 346244421"
+    },
+    {
+      "id": "96:21566",
+      "x": 965.6787109375,
+      "y": 876.6775817871094,
+      "width": 125,
+      "height": 46,
+      "type": "TEXT",
+      "name": "부산 여행",
+      "text": "부산 여행",
+      "fontSize": 32,
+      "baseline": 36.95199966430664,
+      "weight": 700,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21567",
+      "x": 965.6787109375,
+      "y": 923.6775512695312,
+      "width": 175,
+      "height": 35,
+      "type": "TEXT",
+      "name": "2026년 몇월 몇일",
+      "text": "2026년 몇월 몇일",
+      "fontSize": 24,
+      "baseline": 27.964000701904297,
+      "weight": 400,
+      "color": "#adffffff"
+    },
+    {
+      "id": "96:21568",
+      "x": 1297.6787109375,
+      "y": 412.864990234375,
+      "width": 48,
+      "height": 48,
+      "type": "FRAME",
+      "name": "Frame 183"
+    },
+    {
+      "id": "96:21569",
+      "x": 1332.080638885498,
+      "y": 434.42111587524414,
+      "width": 5.138753414154053,
+      "height": 20.55501365661621,
+      "type": "VECTOR",
+      "name": "Vector"
+    },
+    {
+      "id": "96:21570",
+      "x": 1101.5087890625,
+      "y": 882.1775817871094,
+      "width": 108,
+      "height": 35,
+      "type": "TEXT",
+      "name": "대충 제목 수정 아이콘",
+      "text": "대충 제목 수정 아이콘",
+      "fontSize": 12,
+      "baseline": 22.73200035095215,
+      "weight": 400,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21571",
+      "x": 1390,
+      "y": 379.135009765625,
+      "width": 420,
+      "height": 630,
+      "type": "FRAME",
+      "name": "Application window · Landscape · 1700×1184"
+    },
+    {
+      "id": "96:21572",
+      "x": 1389.9999694824219,
+      "y": 379.135009765625,
+      "width": 420.0000305175781,
+      "height": 630,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "속초 2"
+    },
+    {
+      "id": "96:21573",
+      "x": 1390,
+      "y": 696.51953125,
+      "width": 420,
+      "height": 312.615478515625,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "Rectangle 346244421"
+    },
+    {
+      "id": "96:21574",
+      "x": 1409.6787109375,
+      "y": 876.6775817871094,
+      "width": 125,
+      "height": 46,
+      "type": "TEXT",
+      "name": "속초 여행",
+      "text": "속초 여행",
+      "fontSize": 32,
+      "baseline": 36.95199966430664,
+      "weight": 700,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21575",
+      "x": 1409.6787109375,
+      "y": 923.6775512695312,
+      "width": 175,
+      "height": 35,
+      "type": "TEXT",
+      "name": "2026년 몇월 몇일",
+      "text": "2026년 몇월 몇일",
+      "fontSize": 24,
+      "baseline": 27.964000701904297,
+      "weight": 400,
+      "color": "#adffffff"
+    },
+    {
+      "id": "96:21576",
+      "x": 1741.6787109375,
+      "y": 412.864990234375,
+      "width": 48,
+      "height": 48,
+      "type": "FRAME",
+      "name": "Frame 183"
+    },
+    {
+      "id": "96:21577",
+      "x": 1776.080638885498,
+      "y": 434.42111587524414,
+      "width": 5.138753414154053,
+      "height": 20.55501365661621,
+      "type": "VECTOR",
+      "name": "Vector"
+    },
+    {
+      "id": "96:21578",
+      "x": 1545.5087890625,
+      "y": 882.1775817871094,
+      "width": 108,
+      "height": 35,
+      "type": "TEXT",
+      "name": "대충 제목 수정 아이콘",
+      "text": "대충 제목 수정 아이콘",
+      "fontSize": 12,
+      "baseline": 22.73200035095215,
+      "weight": 400,
+      "color": "#ffffffff"
+    },
+    {
+      "id": "96:21579",
+      "x": 1487.9501953125,
+      "y": 379.135009765625,
+      "width": 210.0498046875,
+      "height": 630,
+      "type": "ROUNDED_RECTANGLE",
+      "name": "Rectangle 346244422"
+    }
+  ],
+  "images": [
+    {
+      "resource": "archive_gangneung",
+      "nodeId": "96:21548",
+      "hash": "15a0d91732f4b8323f9a93023ed678a3f942821f",
+      "sha256": "fb5a645a8057a063c4245fb86b77b75776298c25fce41cba5848bab29748662e",
+      "width": 2400,
+      "height": 3600,
+      "sample": [
+        28,
+        144,
+        219
+      ]
+    },
+    {
+      "resource": "archive_gyeongju",
+      "nodeId": "96:21556",
+      "hash": "d43477c8117ca302389eb94b8912eade26bb5abd",
+      "sha256": "a3c68a66094df21d4ffe841c50c5b3419549fbbe27c6a6dde4147d265505f4bf",
+      "width": 1200,
+      "height": 1599,
+      "sample": [
+        104,
+        205,
+        247
+      ]
+    },
+    {
+      "resource": "archive_busan",
+      "nodeId": "96:21564",
+      "hash": "25fbc5ff8e431c3fbc036f063d413af36278900b",
+      "sha256": "3ddcb92600601cff5963b70e564b6cebf54c91ca888af300c09e47066cbacfc3",
+      "width": 564,
+      "height": 705,
+      "sample": [
+        212,
+        228,
+        243
+      ]
+    },
+    {
+      "resource": "archive_sokcho",
+      "nodeId": "96:21572",
+      "hash": "972c49c59194450a5a75b40f64c4ff2a814feea5",
+      "sha256": "e72d708b4e66c46b4d03d0d94c67ce225c1472bdf3502fb699cbf72a1403f0ec",
+      "width": 1200,
+      "height": 1600,
+      "sample": [
+        184,
+        216,
+        254
+      ]
+    }
+  ]
+}
